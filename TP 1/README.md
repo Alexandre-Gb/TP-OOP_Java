@@ -99,11 +99,11 @@ public class Calc {
 ```
 Ici, la cinquième et dernière ligne au seij de la fonction main permet d'afficher la valeur saisie par l'utilisateur.
 
-2.1 **Indiquer dans le programme où sont les variables et quel est leur type associé.**
+2. **Indiquer dans le programme où sont les variables et quel est leur type associé.**
 
 La variable `scanner` est de type `Scanner` et la variable `value` est de type `int` primitif.
 
-2.2 **Modifier le programme pour déclarer et initialiser les variables en une seule ligne.**
+**Modifier le programme pour déclarer et initialiser les variables en une seule ligne.**
 
 On modifie le code du fichier "Calc.java" pour déclarer et initialiser les variables au mieux :
 ```java
@@ -121,11 +121,11 @@ public class Calc {
 }
 ```
 
-3.1 **Pourquoi nextInt() n'est pas une fonction ?**
+3. **Pourquoi nextInt() n'est pas une fonction ?**
 
 `nextInt()` n'est pas une fonction car elle est associée à une classe (Scanner dans ce cas). 
 
-3.2 **Qu'est nextInt() alors ?**
+**Qu'est nextInt() alors ?**
 
 Etant donné que `nextInt()` fait partie de la classe Scanner, on dit que c'est une méthode.
 
@@ -175,14 +175,14 @@ public class Calc {
 
 ## Exercice 4 - Record et conversion de String en entier
 
-1.1 **Dans un premier temps, créer un record Point (dans un fichier Point.java) avec deux composants x et y, tous les deux de type int.**
+1. **Dans un premier temps, créer un record Point (dans un fichier Point.java) avec deux composants x et y, tous les deux de type int.**
 
 On commence par créer le fichier "Point.java" et on y écrit le code suivant :
 ```java
 public record Point(int x, int y) {}
 ```
 
-1.2 **Quelle doit être la ligne de commande pour compiler le fichier Point.java ?**
+**Quelle doit être la ligne de commande pour compiler le fichier Point.java ?**
 
 On compile le fichier "Point.java" avec la commande `javac Point.java`.
 
@@ -281,7 +281,7 @@ user    0m0.859s
 sys     0m0.001s
 ```
 
-2.1 **Écrire le programme (Pascal.java) équivalent en Java. Pour une fois, servez-vous du copier/coller. Compiler le programme puis l'exécuter en mesurant le temps (toujours avec time).**
+2. **Écrire le programme (Pascal.java) équivalent en Java. Pour une fois, servez-vous du copier/coller. Compiler le programme puis l'exécuter en mesurant le temps (toujours avec time).**
 
 On crée le fichier "Pascal.java" et on y écrit le code suivant :
 ```java
@@ -321,7 +321,7 @@ user    0m0.265s
 sys     0m0.012s
 ```
 
-2.2: **Comment peut-on expliquer la différence de vitesse ?**
+**Comment peut-on expliquer la différence de vitesse ?**
 Le code Java est, dans un premier temps, transpilé en bytecode, puis interprété par la machine virtuelle Java (JVM).
 
 Le code C est, lui, directement compilé en langage assembleur.
