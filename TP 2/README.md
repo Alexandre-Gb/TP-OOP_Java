@@ -283,3 +283,23 @@ Lorsque l'on doit concaténer plusieurs chaînes de caractères, il est préfér
 **Et pourquoi est-ce que le chargé de TD va me faire les gros yeux si j'écris un + dans un appel à la méthode append?**
 
 Le but en utilisant la méthode "append" est de ne pas remplir la mémoire d'objets temporaires. Le fait d'utiliser le "+" dans un appel à la méthode "append" va créer un nouvel objet StringBuilder, ce qui annule l'effort d'optimisation et revient à faire la concaténation sans la méthode "append".
+
+<br>
+
+## Exercice 3 - Reconnaissance de motifs
+
+Le but de cet exercice est la manipulation d'expressions régulières en java. 
+Les expressions régulières sont un moyen de décrire simplement une infinité de chaîne de caractères. 
+Si vous avez besoin de vous rafraichir la mémoire, vous pouvez lire la page Wikipédia. 
+En Java, nous utiliserons pour cela les classes du paquetage java.util.regex. 
+Vous pouvez lire le guide avant de creuser la javadoc.
+
+1. **A quoi servent la classe java.util.regex.Pattern et sa méthode compile ?**
+
+La classe java.util.regex.Pattern permet de définir un motif à rechercher dans une chaîne de caractères. 
+La méthode statique compile permet de compiler une expression régulière en un objet "Pattern".
+
+**A quoi sert la classe java.util.regex.Matcher ?**
+
+La classe java.util.regex.Matcher permet de rechercher un motif dans une chaîne de caractères. 
+Elle permet de déterminer si le motif est présent dans la chaîne, et de récupérer les sous-chaînes correspondant au motif.
