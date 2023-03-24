@@ -21,7 +21,9 @@ System.out.println(s.length());
 **Quel est le type de s ? Comment le compilateur fait-il pour savoir qu'il existe une méthode length() sur s ?**
 
 Le type de la variable s est `String`. 
-Le compilateur sait que la variable est de type `String` car la méthode `length()` appartient à la classe `String`.
+Le compilateur, ne trouvant pas de type "déclaré", utilise le type de la valeur affectée à la variable.
+
+Le compilateur va vérifier qu'une méthode `length()` existe bien dans la classe `String` (qui est la classe que le compilateur attribue à la variable).
 
 2. **Qu'affiche le code suivant ? Expliquer.**
 ```java
@@ -35,8 +37,12 @@ System.out.println(s1 == s3);
 
 Le code ci-dessus affichera `true` dans un premier temps, puis `false`.
 
+Le "==" permet de vérifier que deux variables pointent vers la même référence.
+
 La première ligne affiche `true` car les deux variables `s1` et `s2` pointent vers la même référence.
 La seconde ligne affiche `false` car les deux variables `s1` et `s3` pointent vers des références différentes.
+
+
 
 3. **Quelle est la méthode à utiliser si l'on veut tester si le contenu des chaînes de caractères est le même ?**
 
@@ -61,19 +67,24 @@ System.out.println(s6 == s7);
 
 Le code ci-dessus affichera `true`.
 
-Ce comportement est du au fait que les chaînes de caractères sont litérales (déclarées avec des double quotes). 
+Ce comportement est du au fait que ces chaînes de caractères sont litérales (déclarées avec des double quotes). 
 Ces chaînes sont stockées dans un pool de chaînes de caractères, et sont donc partagées entre toutes les variables qui les utilisent.
+
+L'objectif de cette technique est de ne stocker qu'une seule chaîne "toto" en mémoire. Ce procédé s'appelle "Interning". 
 
 Les chaînes ayant le même contenu, elles partagent le même emplacement mémoire, ce qui explique que `s6 == s7` vaut `true`.
 
 5. **Expliquer pourquoi il est important que java.lang.String ne soit pas mutable.**
 
-On entend par "mutable" une classe dont les instances peuvent être modifiées après leur création.
+On entend par "mutable" une classe dont les objets peuvent être modifiées après leur instanciation.
 
-La classe "String" est immuable, ce qui signifie que les instances de cette classe ne peuvent pas être modifiées après leur création.
-L'objectif est, par mesures de sécurité, de ne pas permettre de pouvoir modifier une chaîne de caractère une fois instanciée.
+La classe "String" est immuable, ce qui signifie que les objets de cette classe ne peuvent pas être modifiées après leur instanciation.
+L'objectif est, par mesures de sécurité, de ne pas permettre d'altérer une chaîne de caractère une fois instanciée.
 
-L'alternative mutable de la classe "String" est la classe "StringBuilder", qui permet de modifier une chaîne de caractères.
+L'alternative mutable de la classe "String" est la classe "StringBuilder". 
+Un objet de cette classe peut être modifié une fois instanciée essentiellement grâce à la méthode `append()`.
+
+Un objet de la classe StringBuilder pourra, une fois les opérations de modification effectuées, être converti en objet de la classe String grâce à la méthode `toString()`.
 
 6. **Qu'affiche le code suivant ? Expliquer**
 ```java
@@ -83,13 +94,14 @@ System.out.println(s8);
 ```
 
 Le code ci-dessus affichera `hello`. 
-Comme mentionné précédemment, une chaîne de caractères immuable ne peut pas être modifiée après avoir été instanciée. Elle ne peut donc pas être passée en majuscules.
+Comme mentionné précédemment, une chaîne de caractères ne peut pas être modifiée après avoir été instanciée. Elle ne peut donc pas être convertie en majuscules.
 
-Si l'on souhaite afficher la chaîne de caractères en majuscules, il faut utiliser la méthode `toUpperCase()` de la classe `StringBuilder` :
+Si l'on souhaite afficher la chaîne de caractères en majuscules, une des solutions serait de ré-instancier une nouvelle chaîne de caractères en majuscules (ce qui n'est pas une utilisation optimale de la mémoire) :
+```java
 ```java
 var s8 = "hello";
-var s9 = new StringBuilder(s8);
-System.out.println(s9.toUpperCase());
+s8 = s8.toUpperCase();
+System.out.println(s8);
 ```
 
 <br>
@@ -203,6 +215,9 @@ public class Test {
 ```
 
 On remarque, à partir de la ligne 18, que le bytecode généré par le compilateur utilise la méthode `makeConcatWithConstants` pour concaténer les chaînes de caractères.
+
+Afin de comparer si un réel changement sépare l'utilisation de single quote et double quotes, on compare le bytecode ci-dessus à un bytecode généré em remplaçant les quotes.
+On constate que le bytecode est similaire, ce qui indique implicitement que les quotes n'ont pas d'impact sur le bytecode généré.
 
 Le bytecode généré par le compilateur, une fois reconstitué en fichier ".java" standard, sera similaire à cela :
 ```java
