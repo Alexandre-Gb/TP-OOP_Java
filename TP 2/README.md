@@ -385,3 +385,10 @@ public class LinkExtractor {
   }
 }
 ```
+
+4. **Modifiez le programme pour ne conserver que les liens contenant le mot java ou Java.**
+
+On remplace le pattern par celui-ci :
+```java
+Pattern pattern = Pattern.compile("<a href=\"(.*?java.*?)\"");
+```

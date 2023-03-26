@@ -9,6 +9,7 @@ public class LinkExtractor {
   public static void main(String[] args) throws IOException {
     var path = Path.of(args[0]);
     var lines = Files.readAllLines(path, StandardCharsets.ISO_8859_1);
+    // Pattern pattern = Pattern.compile("<a href=\"(.*?java.*?)\"");
     Pattern pattern = Pattern.compile("<a href=\"(.*?)\"");
     // reads all lines of the file opened in Latin-1
     for(var line : lines){
