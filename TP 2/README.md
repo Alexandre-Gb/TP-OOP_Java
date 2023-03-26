@@ -318,3 +318,50 @@ La méthode statique compile permet de compiler une expression régulière en un
 
 La classe java.util.regex.Matcher permet de rechercher un motif dans une chaîne de caractères. 
 Elle permet de déterminer si le motif est présent dans la chaîne, et de récupérer les sous-chaînes correspondant au motif.
+
+2. **Reprenez la petite calculatrice Calc de l'exercice 1. 
+On veut que si l'utilisateur saisisse autre chose qu'un nombre, le programme lui demande de saisir une autre valeur. 
+Pour cela on remplacera l'appel scanner.nextInt par scanner.nextLine qui renvoie la chaîne de caractères saisie par l'utilisateur. 
+N'oubliez pas de remplacer scanner.hasNextInt() par scanner.hasNextLine().
+Attention, n'oubliez pas que l'utilisateur doit pouvoir saisir un nombre négatif.**
+
+Voici le code de la classe Calc :
+```java
+import java.util.Scanner;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
+public class Calc {
+  public static void main(String[] args) {
+    Scanner scanner = new Scanner(System.in);
+    int[] values = new int[2];
+
+    Pattern pattern = Pattern.compile("-?[0-9]+");
+    Matcher matcher;
+
+    for (int i = 0; i < 2; i++) {
+      System.out.print("Please provide an integer value : ");
+      String input = scanner.nextLine();
+      matcher = pattern.matcher(input);
+      if (matcher.find()) {
+        values[i] = Integer.parseInt(input);
+      } else {
+        System.out.println("Invalid input, please try again.");
+        i--;
+      }
+    }
+
+    System.out.println(values[0] + " + " + values[1] + " = " + (values[0] + values[1]));
+    System.out.println(values[0] + " - " + values[1] + " = " + (values[0] - values[1]));
+    System.out.println(values[0] + " / " + values[1] + " = " + (values[0] / values[1]));
+    System.out.println(values[0] + " % " + values[1] + " = " + (values[0] % values[1]));
+  }
+}
+```
+
+On importe les classes suivantes :
+
+- java.util.Scanner : permet de lire des données depuis l'entrée standard
+- java.util.regex.Pattern : permet de définir un motif à rechercher dans une chaîne de caractères
+- java.util.regex.Matcher : permet de rechercher un motif dans une chaîne de caractères
+
