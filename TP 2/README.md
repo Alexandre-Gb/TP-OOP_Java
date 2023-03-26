@@ -365,3 +365,30 @@ On importe les classes suivantes :
 - java.util.regex.Pattern : permet de définir un motif à rechercher dans une chaîne de caractères
 - java.util.regex.Matcher : permet de rechercher un motif dans une chaîne de caractères
 
+3. **En partant du code ci-dessous, on veut écrire un programme qui va lire un fichier HTML dont le chemin est pris sur la ligne de commande et qui va afficher la liste des URLs de tous les liens contenus dans le fichier.**
+
+On complète le code qui nous est donné :
+```java
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.charset.StandardCharsets;
+import java.io.IOException;
+
+public class LinkExtractor {
+  public static void main(String[] args) throws IOException {
+    var path = Path.of(args[0]);
+    var lines = Files.readAllLines(path, StandardCharsets.ISO_8859_1);
+    Pattern pattern = Pattern.compile("<a href=\"(.*?)\"");
+    // reads all lines of the file opened in Latin-1
+    for(var line : lines){
+      Matcher matcher = pattern.matcher(line);
+      while(matcher.find()) {
+        System.out.println(line.substring(matcher.start(), matcher.end()));
+        System.out.println("===>" + matcher.group(1));
+      }
+    }
+  }
+}
+```
