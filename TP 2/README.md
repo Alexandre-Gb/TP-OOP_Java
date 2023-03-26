@@ -369,13 +369,6 @@ On importe les classes suivantes :
 
 On complète le code qui nous est donné :
 ```java
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.charset.StandardCharsets;
-import java.io.IOException;
-
 public class LinkExtractor {
   public static void main(String[] args) throws IOException {
     var path = Path.of(args[0]);
