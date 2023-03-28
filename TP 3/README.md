@@ -307,8 +307,8 @@ Malheureusement, le `main` n'a pas le comportement attendu.
 
 1. **Quel est le problème ?**
 
-Le problème est que la méthode `equals` de la classe `Book2` n'est pas redéfinie, et qu'elle renvoie donc `false` par défaut.
-Cela est du au fait que les records implantent la méthode `equals` par défaut, mais que les classes non (de même pour la méthode hashCode()).
+Le problème est que la méthode `equals` n'est pas définie comme on le souhaiterait.
+Cela est du au fait que les records implantent la méthode `equals` par défaut, mais que les classes non (il en va de même pour la méthode hashCode()).
 
 2. **Comment corriger le problème si on s'entête à utiliser une classe ?**
 
@@ -328,3 +328,109 @@ La méthode `equals` de la classe `Book2` renvoie à présent `true`. Elle est c
 
 ## Exercice 4 - Tri à caillou [à la maison]
 
+1. **Écrire une méthode swap qui échange les valeurs de deux cases d'un tableau :**
+
+On teste avec un tableau d'entiers :
+```java
+public class Algo {
+  public static void printArray(Integer[] values) {
+    System.out.print("[ ");
+    for (int i = 0; i < values.length; i++) {
+      System.out.print(values[i] + " ");
+    }
+    System.out.println("]");
+  }
+  public static Integer[] swap(Integer[] values, int index1, int index2) {
+    Integer temp = values[index1];
+    values[index1] = values[index2];
+    values[index2] = temp;
+    return values;
+  }
+
+  public static void main(String[] args) {
+    Integer[] values = new Integer[5];
+    for (int i = 0; i < values.length; i++) {
+      values[i] = i;
+    }
+    printArray(values);
+    swap(values, 0, 4);
+    printArray(values);
+  }
+}
+```
+
+On obtient le résultat suivant :
+```bash
+[ 0 1 2 3 4 ]
+[ 4 1 2 3 0 ]
+```
+
+2. **Écrire une méthode indexOfMin qui renvoie l'indice de la valeur minimale d'un tableau.**
+
+On écrit la méthode indexOfMin :
+```java
+ public static Integer indexOfMin(Integer[] values) {
+   Integer min = values[0];
+   Integer minIndex = 0;
+   for (int i = 0; i < values.length; i++) {
+     if (values[i] < min) {
+       min = values[i];
+       minIndex = i;
+     }
+   }
+   return minIndex;
+ }
+```
+
+3. **Modifier la méthode indexOfMin en ajoutant deux indices indiquant que l'on cherche l'indice du minimum, non pas sur tout le tableau, mais sur la partie de tableau entre ces deux indices (le premier inclus, le deuxième exclu).**
+
+On modifie la méthode `indexOfMin` :
+```java
+public static Integer indexOfMin(Integer[] values, int lo, int hi) {
+  if (lo < 0 || hi > values.length || lo >= hi) {
+    return null;
+  }
+  
+  Integer min = values[lo];
+  Integer minIndex = lo;
+  for (int i = lo; i < hi; i++) {
+    if (values[i] < min) {
+      min = values[i];
+      minIndex = i;
+    }
+  }
+  return minIndex;
+}
+```
+
+4. **Écrire la méthode sort qui prend un tableau d'entiers en paramètre et qui trie celui-ci en utilisant pour cela les méthodes indexOfMin et swap.**
+
+On écrit la méthode `sort` :
+```java
+public static void sort(Integer[] values) {
+  Integer min;
+  for (int i = 0; i < values.length; i++) {
+    min = indexOfMin(values, i, values.length);
+    swap(values, i, min);
+  }
+}
+```
+
+On teste la méthode dans l'entrée de programme :
+```java
+public static void main(String[] args) {
+  Integer[] values = new Integer[5];
+  for (int i = 0; i < values.length; i++) {
+    values[i] = values.length - i;
+  }
+  printArray(values);
+  sort(values);
+  printArray(values);
+}
+```
+
+On obtient le résultat suivant :
+```bash
+[ 5 4 3 2 1 ]
+[ 1 2 3 4 5 ]
+```
