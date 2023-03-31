@@ -5,7 +5,7 @@
 Chaque répertoire a pour nom le numéro d'exercice auquel il est rattaché. 
 Ces répertoires contiennent les fichiers ".java" associés, ainsi que tout autre fichier en lien avec l'exercice en question.
 
-[Consignes de rendu de TP](https://monge.univ-mlv.fr/ens/IR/IR1/2022-2023/Java/td03.php)
+[Consignes de rendu de TP](https://monge.univ-mlv.fr/ens/IR/IR1/2022-2023/Java/index.php)
 
 [Énoncé](https://monge.univ-mlv.fr/ens/IR/IR1/2022-2023/Java/td03.php)
 ***
