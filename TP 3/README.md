@@ -7,7 +7,7 @@ Ces répertoires contiennent les fichiers ".java" associés, ainsi que tout autr
 
 [Consignes de rendu de TP](https://monge.univ-mlv.fr/ens/IR/IR1/2022-2023/Java/td03.php)
 
-[Énoncé](https://monge.univ-mlv.fr/ens/IR/IR1/2022-2023/Java/td02.php)
+[Énoncé](https://monge.univ-mlv.fr/ens/IR/IR1/2022-2023/Java/td03.php)
 ***
 
 ## Exercice 1 - Livre
