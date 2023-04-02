@@ -14,15 +14,57 @@ Ces répertoires contiennent les fichiers ".java" associés, ainsi que tout autr
 
 À partir de maintenant, nous allons utiliser Eclipse (lancer la commande eclipse dans un terminal) comme environnement pour faire les TPs. 
 
-1. **Créer un projet nommé TP4.**
-
-2. **Vérifier que l'environnement d'exécution est bien Java-19, changer si ce n'est pas le cas.**
-
-3. **Vérifier que l'environnement de compilation est bien 19, changer si ce n'est pas le cas.**
-
-4. **Écrire une classe Main qui affiche Hello Eclipse.**
-
 5. **A faire à la maison pour le compte rendu:**
+
+I. **Que fait sysout + Ctrl + Space dans un main ?**
+
+Ce racourci dans un main permet de générer automatiquement une instruction `System.out.println()`.
+
+II. **Que fait toStr + Ctrl + Space dans une classe ?**
+
+Ce racourci dans une classe permet de générer automatiquement une méthode `toString()`.
+
+III. **Définir un champs foo de type int, que fait get + Ctrl + Space, et set + Ctrl + Space.**
+
+Le racourci get + Ctrl + Space permet de générer automatiquement une méthode `getFoo()` (un getter).
+
+Le racourci set + Ctrl + Space permet de générer automatiquement une méthode `setFoo(int foo)` (un setter).
+
+IV. **Dans le menu Source, comment générer un constructeur initialisant le champ foo ?**
+
+Dans le menu Source, on clique sur Generate `Constructor using Fields`, puis on sélectionne le champ foo.
+
+V. **Sélectionner le nom de la classe puis Alt + Shift + R, qu'obtient-on ? Même question avec le champ foo.**
+
+Sélectionner le nom de la classe puis Alt + Shift + R permet de renommer la classe.
+
+VI. **Écrire a = 2 + 3 + 4, puis sélectionner 2 + 3 puis Alt + Shift + L.**
+
+Cette manipulation permet de créer une variable temporaire `int tmp = 2 + 3` et de remplacer `2 + 3` par `tmp` (extraire l'expression dans une variable locale).
+
+VII. **Écrire new Integer(2), en gardant le curseur après ')', appuyer sur Ctrl + 1, que se passe-t-il ?**
+
+Cette manipulation permet de remplacer `new Integer(2)` par `Integer.valueOf(2)`.
+
+VIII. **Déclarer une variable s de type String et cliquer sur String en maintenant la touche Ctrl . Que se passe-t-il ?**
+
+Cette manipulation permet d'afficher toutes les occurences de la classe String dans le code.
+
+IX. **Dans la méthode toString(), que fait un Ctrl + Clic sur super.toString() ?**
+
+Cette manipulation permet d'aller directement à la définition de la méthode `toString()` de la classe `Object`.
+
+X. **Sélectionner le champs foo, puis Ctrl + Shift + G. Que se passe-t-il ?**
+
+Cela permet d'afficher les références du champs foo dans le code, afin de faciliter la navigation.
+
+XI. **À quoi sert Ctrl + Shift + O ?**
+
+Ce racourci permet d'organiser les imports.
+
+XII. **À quoi sert Ctrl + Shift + C ?**
+
+Ctrl + Shift + C sert à commenter chaque ligne sélectionnée
 
 <br>
 
