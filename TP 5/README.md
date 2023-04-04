@@ -370,3 +370,48 @@ public void removeAllContainersFrom(String destination) {
 L'utilisation de `instanceof` pose problème dans le maintient du code à long terme, pouvant occasionner des erreurs difficiles à trouver et nécessitant de fouiller dans le code pour les résoudre.
 Cela est du au fait que cette façon de procéder ne tient pas compte de la logique métier, mais de la logique technique. En effet, si on décide de changer la façon dont on implémente les classes `Container` et `Passenger`, 
 il faudra modifier la méthode `removeAllContainersFrom` pour qu'elle fonctionne correctement, la ou il serait préférable de modifier directement la méthode `isContainer` implantée par les sous-classes.
+
+9. **On met les conteneurs ayant la destination au même endroit sur le porte-conteneur, et si un porte-conteneur est mal équilibré il a une fâcheuse tendance à se retourner. 
+   Donc, pour aider au placement des conteneurs, il doit être possible de fournir un dictionnaire qui, pour chaque destination, indique le poids de l'ensemble des conteneurs liés à cette destination.
+   Pour cela, écrire une méthode weightPerDestination qui, pour un manifeste donné, renvoie un dictionnaire qui indique le poids des conteneurs pour chaque destination.
+   Par exemple, avec le code ci-dessous, il y a deux conteneurs qui ont comme destination "Monaco", avec un poids combiné de 100 + 300 = 400, tandis que "Luxembourg" a un seul conteneur de poids 200.**
+```java
+public static void main(String[] args) {
+  ...
+  var container11 = new Container("Monaco", 100);
+  var container12 = new Container("Luxembourg", 200);
+  var container13 = new Container("Monaco", 300);
+  var passenger3 = new Passenger("Paris");
+  var manifest8 = new Manifest();
+  manifest8.add(container11);
+  manifest8.add(container12);
+  manifest8.add(container13);
+  manifest8.add(passenger3);
+  System.out.println(manifest8.weightPerDestination());
+  // {Monaco=400, Luxembourg=200}
+}
+```
+
+On implante la méthode `weightPerDestination` dans la classe `Manifest`:
+```java
+public HashMap<String, Integer> weightPerDestination() {
+  HashMap<String, Integer> weights = new HashMap<>();
+  for (Onboard onboard : onboards) {
+  	if (onboard.isContainer()) {
+  		weights.merge(onboard.destination(), onboard.weight(), Integer::sum);
+  	}
+  }
+  return weights;
+}
+```
+
+Il est préferable, dans notre cas, d'utiliser une `HashMap` pour stocker les poids des conteneurs par destination, car elle permet d'associer à des clefs uniques correspondant à chaque destination une valeur correspondant au poids des conteneurs pour cette destination.
+
+Les Dictionnaires ne pouvant contenir de types primitifs, on utilise la classe `Integer` pour stocker les poids des conteneurs.
+
+On vérifie que l'objet est une instance de `Container` (afin de ne pas ajouter un poid innutile de "0"), puis on ajoute le poids du conteneur à la valeur associée à la destination du conteneur dans le dictionnaire.
+
+On obtient le résultat suivant:
+```bash
+{Monaco=400, Luxembourg=200}
+```

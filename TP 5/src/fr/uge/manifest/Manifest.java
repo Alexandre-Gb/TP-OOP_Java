@@ -1,6 +1,7 @@
 package fr.uge.manifest;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class Manifest {
@@ -39,6 +40,16 @@ public class Manifest {
 	public void removeAllContainersFrom(String destination) {
 		onboards.removeIf(onboard -> onboard.isContainer() && onboard.destination().equals(destination));
 		onboards.removeIf(onboard -> onboard instanceof Container && onboard.destination().equals(destination));
+	}
+
+	public HashMap<String, Integer> weightPerDestination() {
+		HashMap<String, Integer> weights = new HashMap<>();
+		for (Onboard onboard : onboards) {
+			if (onboard.isContainer()) {
+				weights.merge(onboard.destination(), onboard.weight(), Integer::sum);
+			}
+		}
+		return weights;
 	}
 
 	@Override
