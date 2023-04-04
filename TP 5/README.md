@@ -1,4 +1,4 @@
-# TP5 - Objets, délégation, ArrayList, HashMap
+# TP5 - Interface et Collection
 ## GIBOZ Alexandre, INFO1 2022-2025
 ***
 
