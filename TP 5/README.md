@@ -317,24 +317,22 @@ public static void main(String[] args) {
 }
 ```
 
-Pour savoir si un objet est une instance d'une classe, on ajoute la méthode `isContainer` dans l'interface `Onboard`, qui devra être implantée par les deux classes `Passenger` et `Container`:
+Pour savoir si un objet est une instance d'une classe, on ajoute la méthode `isContainer` dans l'interface `Onboard`.
+
+La meilleure façon d'implanter cette méthode est de faire de cette dernière une méthode "default", qui retournera `false` par défaut. A l'inverse d'une méthode abstraite, une méthode "default" ne doit pas être obligatoirement implantée par les sous-types, prennant dans ce cas une valeur par défaut.
+
+Ainsi, `isContaine()` renverra false par défaut, sauf pour les objets de type `Container`, qui l'implanteront en renvoyant `true`:
 ```java
-boolean isContainer();
+default boolean isContainer() {
+  return false;
+}
 ```
 
-On implante la méthode `isContainer` dans la classe `Container`:
+On implante la méthode `isContainer` dans la classe `Container` uniquement:
 ```java
 @Override
 public boolean isContainer() {
   return true;
-}
-```
-
-On implante la méthode `isContainer` dans la classe `Passenger`:
-```java
-@Override
-public boolean isContainer() {
-  return false;
 }
 ```
 

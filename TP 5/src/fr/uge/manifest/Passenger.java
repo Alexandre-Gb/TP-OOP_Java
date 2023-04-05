@@ -18,11 +18,6 @@ public record Passenger (String destination) implements Onboard {
   }
 
   @Override
-  public boolean isContainer() {
-    return false;
-  }
-
-  @Override
   public String toString() {
     return destination + " (passenger)";
   }
