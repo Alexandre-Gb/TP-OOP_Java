@@ -165,7 +165,7 @@ Record `LaserDisc`:
 ```java
 @Override
 public String toText() {
-  return "VideoTape:" + name;
+  return "LaserDisc:" + name;
 }
 ```
 
