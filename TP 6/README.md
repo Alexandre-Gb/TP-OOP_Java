@@ -102,9 +102,25 @@ System.out.println(catalog.lookup("Indiana Jones"));
 
 On implante `Catalog`:
 ```java
-LaserDisc[name=Jaws]
-VideoTape[name=The Cotton Club, length=PT2H8M]
-null
+public class Catalog {
+   private final HashMap<String, Article> articles;
+
+   public Catalog() {
+      articles = new HashMap<>();
+   }
+
+   public void add(Article article) {
+      Objects.requireNonNull(article);
+      if (articles.containsKey(article.name()))
+         throw new IllegalStateException("Article already exists");
+      articles.put(article.name(), article);
+   }
+
+   public Article lookup(String name) {
+      Objects.requireNonNull(name);
+      return articles.get(name);
+   }
+}
 ```
 
 3. **On veut pouvoir charger et sauvegarder les articles du catalogue dans un fichier, un article par ligne. 
