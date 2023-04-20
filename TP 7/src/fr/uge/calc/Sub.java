@@ -2,15 +2,15 @@ package fr.uge.calc;
 
 import java.util.Objects;
 
-public record Sub(Expr left, Expr right) implements Expr {
+public record Sub(Expr left, Expr right) implements BinOp {
 	public Sub {
 		Objects.requireNonNull(left);
 		Objects.requireNonNull(right);
 	}
-	
+
 	@Override
-	public int eval() {
-		return left.eval() - right.eval();
+	public int operation(int left, int right) {
+		return left - right;
 	}
 
 	@Override

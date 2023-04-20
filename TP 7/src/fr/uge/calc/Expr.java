@@ -2,7 +2,7 @@ package fr.uge.calc;
 
 import java.util.Iterator;
 
-public sealed interface Expr permits Add, Sub, Mul, Value {
+public sealed interface Expr permits Value, BinOp {
   int eval();
   String toExprString();
 

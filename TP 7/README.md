@@ -303,3 +303,51 @@ On peut accéder aux champs left et right en utilisant la méthode `left()` et `
 
 10. **Écrire le code de BinOp (dans BinOp.java) et modifier Add, Sub et Mul en conséquence.**
 
+On créé l'interface `BinOp`. Cette interface va étendre l'interface `Expr` et sera implantée par les records `Add`, `Sub` et `Mul`.
+
+Grâce au polymorphisme, la méthode par défaut `eval` de l'interface `BinOp` utilisera la méthode `eval` de l'interface `Expr` pour les champs `left` et `right`.
+```java
+public sealed interface BinOp extends Expr permits Add, Sub, Mul {
+    Expr left();
+    Expr right();
+    int operation(int left, int right);
+    default int eval() {
+        int left = left().eval();
+        int right = right().eval();
+        return operation(left, right);
+    }
+}
+```
+
+L'interface `Expr` est modifiée afin de ne permettre l'implémentation que pour les records `Value` et `BinOp`:
+```java
+public sealed interface Expr permits Value, BinOp {
+    ...
+}
+```
+
+On modifie les records `Add`, `Sub` et `Mul` afin qu'ils implémentent l'interface `BinOp` (et la nouvelle méthode `operation`).
+
+Record `Add`:
+```java
+@Override
+public int operation(int left, int right) {
+   return left + right;
+}
+```
+
+Record `Sub`:
+```java
+@Override
+public int operation(int left, int right) {
+   return left - right;
+}
+```
+
+Record `Mul`:
+```java
+@Override
+public int operation(int left, int right) {
+   return left * right;
+}
+```
