@@ -61,4 +61,70 @@ Chaque mot de la liste sera utilisé comme une clef (de manière unique), et se 
 
 On doit choisir une implantation de type `HashMap` car on a besoin d'une structure de données permettant de stocker des couples clef-valeur (à clef unique), et de pouvoir accéder à ces valeurs en temps constant.
 
-3. **On veut parcourir la liste avec la méthode forEach. Quelle interface fonctionnelle prend-elle en paramètre ? Quel est le type fonction correspondant ? Ici, quels sont les types des paramètres / de retour de la lambda que vous allez utliser ?**
+3. **On veut parcourir la liste avec la méthode forEach. Quelle interface fonctionnelle prend-elle en paramètre ?**
+
+La méthode `forEach` prend en paramètre une interface fonctionnelle de type `Consumer<? super T>`.
+
+**Quel est le type fonction correspondant ?**
+
+Le type fonction correspondant est `void accept(T t)`.
+
+**Ici, quels sont les types des paramètres / de retour de la lambda que vous allez utliser ?**
+
+La lambda prend en paramètre une chaîne de caractères, et ne renvoie rien.
+
+4. **Pour compter le nombre d'occurences, on va utiiser la méthode merge de la structure de données que vous avez choisi de renvoyer. Quelle interface fonctionnelle prend-elle en paramètre ?**
+
+La méthode `merge` prend en paramètre une interface fonctionnelle de type `BiFunction<? super V, ? super V, ? extends V>`.
+
+**Quel est le type fonction correspondant ?**
+
+Le type fonction correspondant est `V apply(V v1, V v2)`.
+
+**Ici, quels sont les types des paramètres / de retour de la lambda que vous allez utliser ?**
+
+La lambda prend en paramètre une clef (qui sera hashée afin d'être convertie en int), une valeur et une fonction de remapping.
+
+Dans notre cas, la fonction de remapping sera `Integer::sum`, une méthode statique qui permet de faire la somme de deux entiers.
+
+La lambda ne renvoie rien car elle modifie directement la Liste de chaînes de caractères.
+
+5. **Écrire le code de occurences, toujours dans la classe Lambdas.**
+```java
+public static Map<String, Integer> occurences(List<String> strings) {
+  Objects.requireNonNull(strings);
+  HashMap<String, Integer> map = new HashMap<>();
+  strings.forEach(e -> map.put(e, map.getOrDefault(e, 0) + 1));
+  return Map.copyOf(map);
+}
+```
+
+On teste avec les valeurs suivantes:
+```java
+ArrayList<String> strings = new ArrayList<>();
+strings.add("foo");
+strings.add("bar");
+strings.add("foo");
+System.out.println(occurences(strings));
+```
+
+On obtient le résultat suivant:
+```
+{foo=2, bar=1}
+```
+
+6. **On peut noter qu'il existe une méthode statique sum dans la classe java.lang.Integer qui fait la somme de deux valeurs, on peut donc l'utiliser sous forme de method reference à la place de la lambda, lors de l'appel à merge. 
+    Modifier le code pour l’utiliser (garder la précédente version en commentaires).**
+```java
+public static Map<String, Integer> occurences(List<String> strings) {
+  Objects.requireNonNull(strings);
+  HashMap<String, Integer> map = new HashMap<>();
+// strings.forEach(e -> map.put(e, map.getOrDefault(e, 0) + 1));
+  strings.forEach(e -> map.merge(e, 1, Integer::sum));
+  return Map.copyOf(map);
+}
+```
+
+<br>
+
+## Exercice 3 - groupBy
