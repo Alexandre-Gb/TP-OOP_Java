@@ -128,3 +128,135 @@ public static Map<String, Integer> occurences(List<String> strings) {
 <br>
 
 ## Exercice 3 - groupBy
+
+On souhaite pouvoir grouper des acteurs par leurs prénoms (firstName), avec les acteurs définis ainsi :
+```java
+public record Actor(String firstName, String lastName) {
+  public Actor {
+    Objects.requireNonNull(firstName);
+    Objects.requireNonNull(lastName);
+  }
+}
+```
+
+On va pour cela écrire une méthode actorGroupByFirstName qui prend en paramètre une liste d'acteurs, par exemple [Actor("bob", "de niro"), Actor("willy", "cat"), Actor("bob", "cat")] et renvoie une Map qui, pour un prénom, contient une liste de tous les acteurs ayant ce prénom. 
+
+Avec notre exemple de liste, cela donne :
+```
+{
+  "bob" = [Actor("bob", "de niro"), Actor("bob", "cat")],
+  "willy" = [Actor("willy", "cat")]
+}
+```
+
+1. **Quel est le type de paramètre de actorGroupByFirstName ?**
+
+Le type de paramètre de actorGroupByFirstName est `List<Actor>`.
+
+**Quel est le type de retour de actorGroupByFirstName ?**
+
+Le type de retour de actorGroupByFirstName est `Map<String, List<Actor>>`.
+
+2. **Rappeler comment marche la méthode Map.computeIfAbsent. Son second paramètre est une interface fonctionnelle, à quel type de fonction correspond-elle ?
+   Expliquer à quoi correspondent le premier paramètre et le second paramètre de Map.computeIfAbsent, puis comment on peut l'utiliser pour grouper les acteurs selon leur prénom.**
+
+La méthode `Map.computeIfAbsent` prend en paramètre une clef et une interface fonctionnelle de type `Function<? super K, ? extends V>`, et renvoie la valeur associée à la clef si elle existe, ou bien la valeur renvoyée par la fonction passée en paramètre si la clef n'existe pas.
+
+Dans notre situation ou l'on souhaite grouper les acteurs par leur prénom, la clef sera le prénom de l'acteur, et la valeur sera une liste d'acteurs ayant ce prénom.
+
+3. **Dans notre cas, quel doit être le type de la lambda passée en second paramètre de computeIfAbsent ?**
+
+La lambda passée en second paramètre de `computeIfAbsent` sera de type `Function<String, List<Actor>>`.
+
+4. **Écrire la méthode actorGroupByFirstName()**
+```java
+public static Map<String, List<Actor>> actorGroupByFirstName(List<Actor> actors) {
+  Objects.requireNonNull(actors);
+  HashMap<String, List<Actor>> map = new HashMap<>();
+  actors.forEach(e -> map.computeIfAbsent(e.firstName(), k -> new ArrayList<>()).add(e));
+  return Map.copyOf(map);
+}
+```
+
+On teste avec les valeurs suivantes:
+```java
+ArrayList<Actor> actors = new ArrayList<>();
+actors.add(new Actor("bob", "de niro"));
+actors.add(new Actor("willy", "cat"));
+actors.add(new Actor("bob", "cat"));
+
+System.out.println(actorGroupByFirstName(actors));
+```
+
+On obtient le résultat suivant:
+```
+{willy=[Actor[firstName=willy, lastName=cat]], bob=[Actor[firstName=bob, lastName=de niro], Actor[firstName=bob, lastName=cat]]}
+```
+
+5. **Si on veut maintenant grouper les acteurs par rapport à leur nom (lastName) au lieu du prénom, on va écrire à peu près le même code. 
+    On veut généraliser le code en écrivant une méthode actorGroupBy. qui prend en paramètre une liste d'acteurs ainsi qu'une fonction qui, étant donné un acteur, renvoie la valeur par laquelle il va être groupé. 
+    Et elle renvoie une Map des valeur par lesquelles on les groupe, associées aux listes d'acteurs groupés.**
+
+**Par exemple, on va écrire :**
+```java
+var group1 = actorGroupBy(actors, Actor::firstName);  // groupe par prénom
+var group2 = actorGroupBy(actors, Actor::lastName);   // groupe par nom
+```
+
+**Quelle doit être le type fonction du second paramètre de actorGroupBy ?**
+
+Le type fonction du second paramètre de `actorGroupBy` doit être `Function<Actor, String>`.
+
+**Quelle est l'interface fonctionnelle correspondante ?**
+
+L'interface fonctionnelle correspondante est `Function<T, R>`.
+
+**Écrire la méthode actorGroupBy.** 
+```java
+public static Map<String, List<Actor>> actorGroupBy(List<Actor> actors, Function<Actor, String> keyExtractor) {
+  Objects.requireNonNull(actors);
+  Objects.requireNonNull(keyExtractor);
+  HashMap<String, List<Actor>> map = new HashMap<>();
+  actors.forEach(e -> map.computeIfAbsent(keyExtractor.apply(e), k -> new ArrayList<>()).add(e));
+  return Map.copyOf(map);
+}
+```
+
+On teste avec les valeurs suivantes:
+```java
+var group1 = actorGroupBy(actors, Actor::firstName);  // groupe par prénom
+var group2 = actorGroupBy(actors, Actor::lastName);   // groupe par nom
+System.out.println(group1);
+System.out.println(group2);
+```
+
+On obtient le résultat suivant:
+```
+{bob=[Actor[firstName=bob, lastName=de niro], Actor[firstName=bob, lastName=cat]], willy=[Actor[firstName=willy, lastName=cat]]}
+{cat=[Actor[firstName=willy, lastName=cat], Actor[firstName=bob, lastName=cat]], de niro=[Actor[firstName=bob, lastName=de niro]]}
+```
+
+6. **Écrire la méthode groupBy qui prend en paramètre n'importe quel type de liste et n'importe quelle fonction.**
+```java
+public static <T, K> Map<K, List<T>> actorGroupBy(List<T> list, Function<T, K> keyExtractor) {
+  Objects.requireNonNull(list);
+  Objects.requireNonNull(keyExtractor);
+  HashMap<K, List<T>> map = new HashMap<>();
+  list.forEach(e -> map.computeIfAbsent(keyExtractor.apply(e), k -> new ArrayList<>()).add(e));
+  return Map.copyOf(map);
+}
+```
+
+On teste avec les valeurs suivantes:
+```java
+var group1 = actorGroupBy(actors, Actor::firstName);  // groupe par prénom
+var group2 = actorGroupBy(actors, Actor::lastName);   // groupe par nom
+System.out.println(group1);
+System.out.println(group2);
+```
+
+On obtient le résultat suivant:
+```
+{willy=[Actor[firstName=willy, lastName=cat]], bob=[Actor[firstName=bob, lastName=de niro], Actor[firstName=bob, lastName=cat]]}
+{de niro=[Actor[firstName=bob, lastName=de niro]], cat=[Actor[firstName=willy, lastName=cat], Actor[firstName=bob, lastName=cat]]}
+```
