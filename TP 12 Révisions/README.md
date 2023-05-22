@@ -58,9 +58,6 @@ Hotel.java:
 ```java
 package fr.umlv.monopoly;
 
-import java.util.List;
-import java.util.ArrayList;
-
 public record Hotel (int rooms, double efficiency) implements Asset {
 
   public Hotel(int rooms, double efficiency) {
@@ -88,8 +85,21 @@ public record Hotel (int rooms, double efficiency) implements Asset {
   public String toString() {
     return "Hotel " + rooms + " rooms " + efficiency;
   }
+}
+```
 
-  public static void main(String[] args) {
+Asset.java:
+```java
+package fr.umlv.monopoly;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public sealed interface Asset permits Apartment, Hotel {
+  double price();
+  double efficiency();
+
+  static void main(String[] args) {
     var hotel = new Hotel(5, 0.75);
     System.out.println(hotel);  // Hotel 5 rooms 0.75
 
@@ -134,16 +144,6 @@ public record Hotel (int rooms, double efficiency) implements Asset {
     System.out.println(manager6);  // affiche
     // Apartment 30 m2 with Bony, Clyde 1.0
   }
-}
-```
-
-Asset.java:
-```java
-package fr.umlv.monopoly;
-
-public sealed interface Asset permits Apartment, Hotel {
-	double price();
-	double efficiency();
 }
 ```
 
