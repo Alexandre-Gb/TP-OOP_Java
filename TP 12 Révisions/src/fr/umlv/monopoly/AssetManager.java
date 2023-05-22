@@ -31,7 +31,7 @@ public class AssetManager {
 	@Override
 	public String toString() {
 		var stringBuilder = new StringBuilder();
-		assets.stream().forEach(e -> stringBuilder.append(e.toString()).append("\n"));
+		assets.forEach(e -> stringBuilder.append(e.toString()).append("\n"));
 		
 		return stringBuilder.toString();
 	}

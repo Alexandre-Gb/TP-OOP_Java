@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public final record Apartment (int area, List<String> residents) implements Asset {
+public record Apartment (int area, List<String> residents) implements Asset {
 	public Apartment(int area, List<String> residents) {
 		Objects.requireNonNull(residents);
-		if (residents.size() <= 0) {
+		if (residents.size() == 0) {
 			throw new IllegalArgumentException("Atleast one resident in the apartment");
 		}
 		
@@ -33,14 +33,11 @@ public final record Apartment (int area, List<String> residents) implements Asse
 	
 	@Override
 	public String toString() {
-		var stringBuilder = new StringBuilder();
-		stringBuilder.append("Apartment ")
-			.append(area)
-			.append(" m2 with ")
-			.append(residents.stream().collect(Collectors.joining(", ")))
-			.append(" ")
-			.append(efficiency());
-		
-		return stringBuilder.toString();
+		return "Apartment " +
+						area +
+						" m2 with " +
+						residents.stream().collect(Collectors.joining(", ")) +
+						" " +
+						efficiency();
 	}
 }
