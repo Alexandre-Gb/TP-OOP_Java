@@ -3,9 +3,7 @@ package fr.umlv.monopoly;
 import java.util.List;
 import java.util.ArrayList;
 
-public final class Hotel implements Asset {
-	private final int rooms;
-	private final double efficiency;
+public record Hotel (int rooms, double efficiency) implements Asset {
 	
 	public Hotel(int rooms, double efficiency) {
 		if (rooms < 0) {
