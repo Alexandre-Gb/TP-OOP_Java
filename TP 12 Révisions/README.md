@@ -60,7 +60,7 @@ package fr.umlv.monopoly;
 
 public record Hotel (int rooms, double efficiency) implements Asset {
 
-  public Hotel(int rooms, double efficiency) {
+  public Hotel {
     if (rooms < 0) {
       throw new IllegalArgumentException("Negative rooms not allowed");
     }
